@@ -1,0 +1,15 @@
+{
+  "name": "doorbell1",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsonfile": "^3.0.0"
+  },
+  "devDependencies": {},
+  "description": ""
+}

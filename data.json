@@ -1,0 +1,108 @@
+[
+  {
+    "studioName": "The Incredible Machine",
+    "people": [
+      {
+        "name": "Luke",
+        "chatID": "325721540",
+        "mute": "false"
+      },
+      {
+        "name": "Anh",
+        "chatID": "447323318",
+        "mute": "true"
+      }
+    ]
+  },
+  {
+    "studioName": "Earnest Studio",
+    "people": [
+      {
+        "name": "Rachel",
+        "chatID": "325721540a",
+        "mute": "false"
+      },
+      {
+        "name": "Different person than Rachel",
+        "chatID": "325721540a",
+        "mute": "false"
+      }
+    ]
+  },
+  {
+    "studioName": "Koehorst in't Veld",
+    "people": ""
+  },
+  {
+    "studioName": "Studio Julie Thissen",
+    "people": ""
+  },
+  {
+    "studioName": "Bart at Work",
+    "people": ""
+  },
+  {
+    "studioName": "Mr. Feaver",
+    "people": ""
+  },
+  {
+    "studioName": "Bosporus Bouw",
+    "people": ""
+  },
+  {
+    "studioName": "Mieke Cuppen",
+    "people": ""
+  },
+  {
+    "studioName": "David Derksen",
+    "people": ""
+  },
+  {
+    "studioName": "Jonas Lutz",
+    "people": ""
+  },
+  {
+    "studioName": "Rachel Sender",
+    "people": ""
+  },
+  {
+    "studioName": "Johan van Hengel",
+    "people": ""
+  },
+  {
+    "studioName": "De Kort van Schaik",
+    "people": ""
+  },
+  {
+    "studioName": "Fraai Werk",
+    "people": ""
+  },
+  {
+    "studioName": "Art Fabrik",
+    "people": ""
+  },
+  {
+    "studioName": "Not War",
+    "people": ""
+  },
+  {
+    "studioName": "Phil Procter",
+    "people": ""
+  },
+  {
+    "studioName": "Kasia Zareba studio",
+    "people": ""
+  },
+  {
+    "studioName": "QMod",
+    "people": ""
+  },
+  {
+    "studioName": "Reinier de Jong",
+    "people": ""
+  },
+  {
+    "studioName": "David Derksen",
+    "people": ""
+  }
+]
