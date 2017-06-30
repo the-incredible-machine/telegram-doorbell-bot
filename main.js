@@ -1,4 +1,4 @@
-// Include methods
+// Include npm modules
 const TelegramBot = require('node-telegram-bot-api')
 const jsonfile = require('jsonfile')
 const fs = require('fs');
@@ -7,6 +7,7 @@ const http = require('http');
 
 
 // Set up server and files
+// Sorry voor de lompe code
 var htmlFile;
 var cssFile;
 var jsFile;
@@ -64,11 +65,6 @@ var server = http.createServer(function (request, response) {
             response.writeHead(200, {"Content-Type": "application/json"});
             response.write(jsonFile);
             break;
-   		case "/req" :
-            response.writeHead(200, {"Content-Type": "text/html"});
-            response.write("Got it!");
-            console.log(request.method);
-            break;
         case "/" :
             response.writeHead(200, {"Content-Type": "text/html"});
             response.write(htmlFile);
@@ -81,7 +77,7 @@ var server = http.createServer(function (request, response) {
             response.writeHead(200, {"Content-Type": "text/html"});
             response.write(htmlFile);
             break;
-        default :
+        default : // When an AJAX request is received, the request url is split until the ID of the clicked link remains. This is used to send a telegram message to the right people.
             response.writeHead(200, {"Content-Type": "text/html"});
             var clickID = request.url.split("?")[1].split("&")[0].split("=")[1];
             response.write(clickID);
@@ -95,10 +91,12 @@ server.listen(8080, function(){
 	console.log("Now online on 8080")
 });
 
-// Set up Telegram Bot
+// Set up Telegram Bot that is polling for new messages. If a new Bot will be used, replace the token.
 const token = '283166033:AAF17PqUgXpT8yBqRvcP6t31w-K22Cy9eh0'
 const bot = new TelegramBot(token, {polling: true})
 
+// Set up the default keyboard
+// Dit leek me handig als een soort menu balk, met Mute en Unmute functie, 
 const defaultKeyboard = {
 					reply_markup: {
 			            resize_keyboard: false,
@@ -108,14 +106,13 @@ const defaultKeyboard = {
 			        }
 				}
 
+// Console.log each message that is received for debugging purposes
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
-  console.log(msg)
- 
-  // send a message to the chat acknowledging receipt of their message 
+  console.log(msg)  
 });
 
-// Pulls telegram chat ID from the data JSON file and sends it an alert
+// Pulls telegram chat ID from the data JSON file and sends it an alert message.
 var dingDong = function(studioID) {
 	var file ='data.json'
 	var chatId
@@ -137,7 +134,7 @@ var dingDong = function(studioID) {
 	})
 }
 
-// adding a new person
+// First command that is sent whena a Bot is added is "/Start/. Could be usefull for first time set up.
 bot.onText(/\/start/, (msg) => {
  
 	const chatId = msg.chat.id;
@@ -153,12 +150,10 @@ bot.onText(/\/Mute/, (msg) => {
 	var studio
 	var name
 	const chatId = msg.chat.id;
-	// jsonfile.readFile(file, function(err, obj){
 	var data = fs.readFileSync(file)
 	var obj = JSON.parse(data)
 	for (i = 0; i < obj.length; i++) {
 		for(j = 0; j < obj[i].people.length; j++){
-			// console.log(obj[i].people[j].chatID)
 			if(obj[i].people[j].chatID == chatId){
 				name = obj[i].people[j].name
 				studio = obj[i].studioName
@@ -198,7 +193,7 @@ var muteError = function(name, studio, chatId){
 	bot.sendMessage(chatId, msg, defaultKeyboard)
 }
 
-
+// "Unmute" command
 bot.onText(/\/Unmute/, (msg) => {
 	var file = 'data.json'
 	var i
@@ -206,12 +201,10 @@ bot.onText(/\/Unmute/, (msg) => {
 	var studio
 	var name
 	const chatId = msg.chat.id;
-	// jsonfile.readFile(file, function(err, obj){
 	var data = fs.readFileSync(file)
 	var obj = JSON.parse(data)
 	for (i = 0; i < obj.length; i++) {
 		for(j = 0; j < obj[i].people.length; j++){
-			// console.log(obj[i].people[j].chatID)
 			if(obj[i].people[j].chatID == chatId){
 				name = obj[i].people[j].name
 				studio = obj[i].studioName
@@ -255,3 +248,63 @@ finished = function(err){
 	console.log('all set!')
 }
 
+//2001: A Space Oddysey Easter Egg!!!
+bot.onText(/\/2001/, (msg) => {
+	var file = 'data.json'
+	var i
+	var j
+	var name
+	const chatId = msg.chat.id;
+	var data = fs.readFileSync(file)
+	var obj = JSON.parse(data)
+	for (i = 0; i < obj.length; i++) {
+		for(j = 0; j < obj[i].people.length; j++){
+			if(obj[i].people[j].chatID == chatId){
+				name = obj[i].people[j].name
+				studio = obj[i].studioName
+				affirmative(name, chatId)		
+				break
+			}
+		}
+	}
+})
+
+bot.onText(/\/Open/, (msg) => {
+	var file = 'data.json'
+	var i
+	var j
+	var studio
+	var name
+	const chatId = msg.chat.id;
+	var data = fs.readFileSync(file)
+	var obj = JSON.parse(data)
+	for (i = 0; i < obj.length; i++) {
+		for(j = 0; j < obj[i].people.length; j++){
+			if(obj[i].people[j].chatID == chatId){
+				name = obj[i].people[j].name
+				imSorryDave(name, chatId)		
+				break
+			}
+		}
+	}
+})
+
+var affirmative = function(name, chatId){
+	msg = "Affirmative "+name+", I can read you."
+	const keyboard = {
+		reply_markup: {
+			resize_keyboard: false,
+			one_time_keyboard: true,
+			keyboard: [[{text: "/Open the pod bay door, Front Door."}]]
+		}
+	}
+	bot.sendMessage(chatId, msg, keyboard)
+}
+
+var imSorryDave = function(name, chatId){
+	var hal = '2001.png';
+
+	msg = "I'm sorry "+name+", I'm afraid I can't do that."
+	bot.sendPhoto(chatId, hal, {caption: ''});
+	bot.sendMessage(chatId, msg, defaultKeyboard)
+}

@@ -1,36 +1,24 @@
-// const jsonfile = require('jsonfile')
-
-// Include remote for main.js
-// const remote = require('electron').remote
-// const main = remote.require('./main.js')
-
-// var file2 = 'data.json'
-// var link
-
 $( document ).ready(function() {
-	$.getJSON("data.json", function(result){
-		var audio = $("#dingdong")[0];
-		var items = [];
+	$.getJSON("data.json", function(result){ 																			// Open JSON Data file
+		var audio = $("#dingdong")[0];																					// Point to Audio file
+		var items = [];																									// Make an empty array
         $.each(result, function(i, studio){
-             // console.log(studio.studioName);
-             items.push( "<li><a id='"+i+"' href='#' onclick='return false;'>" + studio.studioName + "</a></li>" );
+             items.push( "<li><a id='"+i+"' href='#' onclick='return false;'>" + studio.studioName + "</a></li>" );		// Get studio names from JSON file, turn them into links within list itmes and push in arry
         });
         $( "<ul/>", {
-		    html: items.join( "" )
+		    html: items.join( "" )																						// Put the Li's in a list in the HTML
 		}).appendTo( "#studios" );
-		$('a').click(function(event){
-			// alert(event.target.id);
-			var clickID = event.target.id;
-			audio.play();
-			$.ajax({
-				type: "GET",
+		$('a').click(function(event){																					// Add event listener to links
+			var clickID = event.target.id;																				// Store link ID of clicked link
+			audio.play();																								// Play dingdong sound
+			$.ajax({																									// Send AJAX GET request to server to trigger Telegram Bot to send a message
+				type: "GET",	
 				url: "req",
 				data: {id: clickID},
 				success:function(data){
 					console.log(data);
 				},
 				error: function(err){
-					// alert(JSON.stringify(err));
 					console.log("error", err);
 				}
 			})
