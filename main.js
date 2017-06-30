@@ -1,14 +1,17 @@
-// // Include methods
-// const electron = require('electron')
+// Include methods
 const TelegramBot = require('node-telegram-bot-api')
 const jsonfile = require('jsonfile')
 const fs = require('fs');
 const http = require('http');
 
+
+
+// Set up server and files
 var htmlFile;
 var cssFile;
 var jsFile;
-var jsonFile
+var jsonFile;
+var mp3File
 
 fs.readFile('./index.html', function(err, data) {
     if (err){
@@ -37,10 +40,16 @@ fs.readFile('./index.js', function(err, data) {
     }
     jsFile = data;
 });
-var bodyParser = require('querystring')
+
+fs.readFile('./dingdong.mp3', function(err, data) {
+    if (err){
+        throw err;
+    }
+    mp3File = data;
+});
+
 var server = http.createServer(function (request, response) {
     
-    console.log(request.body);
 
     switch (request.url) {
         case "/style.css" :
@@ -57,12 +66,27 @@ var server = http.createServer(function (request, response) {
             break;
    		case "/req" :
             response.writeHead(200, {"Content-Type": "text/html"});
-            response.write("yo");
+            response.write("Got it!");
+            console.log(request.method);
+            break;
+        case "/" :
+            response.writeHead(200, {"Content-Type": "text/html"});
+            response.write(htmlFile);
+            break;
+        case "/dingdong.mp3" :
+            response.writeHead(200, {"Content-Type": "audio/mpeg"});
+            response.write(mp3File);
+            break;
+        case "/favicon.ico" :
+            response.writeHead(200, {"Content-Type": "text/html"});
+            response.write(htmlFile);
             break;
         default :
             response.writeHead(200, {"Content-Type": "text/html"});
-            response.write(htmlFile);
-            console.log("default case");
+            var clickID = request.url.split("?")[1].split("&")[0].split("=")[1];
+            response.write(clickID);
+            console.log(clickID);
+            dingDong(clickID);
     };
     response.end();
 })
@@ -70,18 +94,6 @@ var server = http.createServer(function (request, response) {
 server.listen(8080, function(){
 	console.log("Now online on 8080")
 });
-
-// var connect = require('connect');
-// var serveStatic = require('serve-static');
-// connect().use(serveStatic(__dirname)).listen(8080, function(){
-//     console.log('Server running on 8080...');
-// });
-// connect().use('/dingdong',function(req, res, next){
-// 	console.log("reeeeeeequest");
-// 	next();
-// })
-
-
 
 // Set up Telegram Bot
 const token = '283166033:AAF17PqUgXpT8yBqRvcP6t31w-K22Cy9eh0'
@@ -92,24 +104,19 @@ const defaultKeyboard = {
 			            resize_keyboard: false,
 			            one_time_keyboard: false,
 			            // keyboard: [["/Mute \ud83d\udd15","/Unmute \ud83d\udd14"],["/Show Commands"]]
-			            keyboard: [[{text: "\ud83d\udd15 Mute doorbell", callback_data: "mute"}],[{text: "\ud83d\udd14 Unmute doorbell", callback_data: "mute"}],["\u2753 Show Commands"]]
+			            keyboard: [[{text: "\ud83d\udd15 Mute doorbell", callback_data: "mute"}],[{text: "\ud83d\udd14 Unmute doorbell", callback_data: "unmute"}],["\u2753 Show Commands"]]
 			        }
 				}
 
-// // Set up electron window
-// const {app, BrowserWindow} = electron
+bot.on('message', (msg) => {
+  const chatId = msg.chat.id;
+  console.log(msg)
+ 
+  // send a message to the chat acknowledging receipt of their message 
+});
 
-// // Run electron
-// app.on('ready', () => {
-// 	var mainWindow = new BrowserWindow({
-// 		width: 480,
-// 		height: 800
-// 	})
-// 	mainWindow.loadURL('file:///C:/Users/s121494/doorbell1/index.html')
-// })
-
-// Pulls telegram chat ID from the designated JSON file and sends it a message
-exports.dingDong = function(studioID) {
+// Pulls telegram chat ID from the data JSON file and sends it an alert
+var dingDong = function(studioID) {
 	var file ='data.json'
 	var chatId
 	jsonfile.readFile(file, function(err, obj){
@@ -135,7 +142,6 @@ bot.onText(/\/start/, (msg) => {
  
 	const chatId = msg.chat.id;
 	const resp = "Hi Stranger! Nice too meet you, I'm the front door of Voorhaven 57. If you want, I'll alert you when you when there is someone (or something) the door for you. Would you like to register? /Yes /No";
-	// send back the matched "whatever" to the chat 
 	bot.sendMessage(chatId, resp, defaultKeyboard);
 });
 

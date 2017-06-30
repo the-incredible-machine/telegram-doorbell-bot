@@ -9,6 +9,7 @@
 
 $( document ).ready(function() {
 	$.getJSON("data.json", function(result){
+		var audio = $("#dingdong")[0];
 		var items = [];
         $.each(result, function(i, studio){
              // console.log(studio.studioName);
@@ -20,10 +21,11 @@ $( document ).ready(function() {
 		$('a').click(function(event){
 			// alert(event.target.id);
 			var clickID = event.target.id;
+			audio.play();
 			$.ajax({
-				type: "POST",
+				type: "GET",
 				url: "req",
-				data: {test: "test"},
+				data: {id: clickID},
 				success:function(data){
 					console.log(data);
 				},
