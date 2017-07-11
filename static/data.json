@@ -3,14 +3,14 @@
     "studioName": "The Incredible Machine",
     "people": [
       {
-        "name": "Luke",
-        "chatID": "325721540",
-        "mute": "false"
-      },
-      {
         "name": "Anh",
         "chatID": "447323318",
-        "mute": "true"
+        "mute": false
+      },
+      {
+        "name": "JG",
+        "chatID": "284837167",
+        "mute": false
       }
     ]
   },
@@ -20,12 +20,12 @@
       {
         "name": "Rachel",
         "chatID": "325721540a",
-        "mute": "false"
+        "mute": false
       },
       {
         "name": "Different person than Rachel",
         "chatID": "325721540a",
-        "mute": "false"
+        "mute": false
       }
     ]
   },

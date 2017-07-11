@@ -13,7 +13,7 @@ $( document ).ready(function() {
 			audio.play();																								// Play dingdong sound
 			$.ajax({																									// Send AJAX GET request to server to trigger Telegram Bot to send a message
 				type: "GET",	
-				url: "req",
+				url: "dingdong",
 				data: {id: clickID},
 				success:function(data){
 					console.log(data);
