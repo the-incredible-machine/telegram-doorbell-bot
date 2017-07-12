@@ -4,13 +4,11 @@
     "people": [
       {
         "name": "Anh",
-        "chatID": "447323318",
-        "mute": false
+        "chatId": "447323318"
       },
       {
         "name": "JG",
-        "chatID": "284837167",
-        "mute": false
+        "chatId": "284837167"
       }
     ]
   },
@@ -19,90 +17,97 @@
     "people": [
       {
         "name": "Rachel",
-        "chatID": "325721540a",
-        "mute": false
+        "chatId": "325721540a"
       },
       {
         "name": "Different person than Rachel",
-        "chatID": "325721540a",
-        "mute": false
+        "chatId": "325721540a"
+      },
+      {
+        "name": "JG",
+        "chatId": "284837167"
       }
     ]
   },
   {
     "studioName": "Koehorst in't Veld",
-    "people": ""
+    "people": [
+      {
+        "name": "JG",
+        "chatId": "284837167"
+      }
+    ]
   },
   {
     "studioName": "Studio Julie Thissen",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Bart at Work",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Mr. Feaver",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Bosporus Bouw",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Mieke Cuppen",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "David Derksen",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Jonas Lutz",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Rachel Sender",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Johan van Hengel",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "De Kort van Schaik",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Fraai Werk",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Art Fabrik",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Not War",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Phil Procter",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Kasia Zareba studio",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "QMod",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "Reinier de Jong",
-    "people": ""
+    "people": []
   },
   {
     "studioName": "David Derksen",
-    "people": ""
+    "people": []
   }
 ]

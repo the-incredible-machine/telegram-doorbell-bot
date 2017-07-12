@@ -11,7 +11,7 @@ https://core.telegram.org/bots
 # Bot interface
 
 ## Default
-start
+start 
 help
 settings
 
@@ -22,8 +22,8 @@ add_to_studio - Add user to a studio
 remove_from_studio - Remove user from a studio
 
 ## Respond to doorbell
-will_open_door
-cant_come
+yes_will_come - You will open the door, other studio members will be notified
+no_cant_come - You can't open the door, other studio members will be notified
 
 ## Mute
 //Mute/unmute can be done in telegram itself

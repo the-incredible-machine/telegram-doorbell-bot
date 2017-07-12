@@ -1,6 +1,5 @@
 // Include npm modules
 
-const fs = require('fs');
 const http = require('http');
 const _ = require('lodash');
 const static = require('node-static');
