@@ -22,21 +22,12 @@
       {
         "name": "Different person than Rachel",
         "chatId": "325721540a"
-      },
-      {
-        "name": "JG",
-        "chatId": "284837167"
       }
     ]
   },
   {
     "studioName": "Koehorst in't Veld",
-    "people": [
-      {
-        "name": "JG",
-        "chatId": "284837167"
-      }
-    ]
+    "people": []
   },
   {
     "studioName": "Studio Julie Thissen",
@@ -44,7 +35,12 @@
   },
   {
     "studioName": "Bart at Work",
-    "people": []
+    "people": [
+      {
+        "name": "JG",
+        "chatId": "284837167"
+      }
+    ]
   },
   {
     "studioName": "Mr. Feaver",

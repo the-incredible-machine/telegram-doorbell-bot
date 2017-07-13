@@ -11,6 +11,7 @@ const fs = require('fs');
   var setup;
   const file = 'static/data.json';
   var dataObj = JSON.parse(fs.readFileSync(file));
+  var messageCallback;
 
   //TODO: update default keyboard, or remove..
   const defaultKeyboard = {
@@ -28,7 +29,9 @@ const fs = require('fs');
   }
 
 
-  setup = function (token) {
+  setup = function (token, _messageCallback) {
+
+    messageCallback = _messageCallback;
     bot = new TelegramBot(token, {
       polling: true
     });
@@ -89,6 +92,10 @@ const fs = require('fs');
         } 
       }else if( msg.data.startsWith('door')){
         //TODO: respond to door UI
+        console.log('messageCallback', messageCallback);
+        if(messageCallback){
+          messageCallback(msg);
+        }
       }
     });
     var updateFile = function(){

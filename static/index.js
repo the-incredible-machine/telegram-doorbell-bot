@@ -1,5 +1,7 @@
 $( document ).ready(function() {
+
 	$.getJSON("data.json", function(result){ 																			// Open JSON Data file
+		
 		var audio = $("#dingdong")[0];																					// Point to Audio file
 		var items = [];																									// Make an empty array
         $.each(result, function(i, studio){
@@ -8,6 +10,8 @@ $( document ).ready(function() {
         $( "<ul/>", {
 		    html: items.join( "" )																						// Put the Li's in a list in the HTML
 		}).appendTo( "#studios" );
+		
+		
 		$('a').click(function(event){																					// Add event listener to links
 			var clickID = event.target.id;																				// Store link ID of clicked link
 			audio.play();																								// Play dingdong sound
@@ -24,5 +28,32 @@ $( document ).ready(function() {
 			})
 		});
 	});
+
+	function waitForMsg(){
+        
+        $.ajax({
+            type: "GET",
+            url: "messages",
+
+            async: true, /* If set to non-async, browser shows page as "Loading.."*/
+            cache: false,
+            timeout:50000, /* Timeout in ms */
+
+            success: function(data){
+								console.log('response:',data);
+                setTimeout(
+                    waitForMsg,
+                    100
+                );
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+                console.log("error", textStatus + " (" + errorThrown + ")");
+                setTimeout(
+                    waitForMsg,
+                    100);
+            }
+        });
+	}
+	waitForMsg();
 });
 
