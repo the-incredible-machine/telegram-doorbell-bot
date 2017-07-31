@@ -2,6 +2,7 @@ const TelegramBot = require('node-telegram-bot-api')
 const jsonfile = require('jsonfile')
 const _ = require('lodash');
 const fs = require('fs');
+const data = require('./data.js');
 
 
 (function () {
@@ -9,7 +10,7 @@ const fs = require('fs');
   var bot;
   var dingDong;
   var setup;
-  const file = 'static/data.json';
+  const file = 'web/data.json';
   var dataObj = JSON.parse(fs.readFileSync(file));
   var messageCallback;
 
@@ -35,9 +36,7 @@ const fs = require('fs');
     bot = new TelegramBot(token, {
       polling: true
     });
-
-
-
+    
     // Console.log each message that is received for debugging purposes
     bot.on('message', (msg) => {
       const chatId = msg.chat.id;
@@ -70,41 +69,20 @@ const fs = require('fs');
       console.log(msg);
       if( msg.data.startsWith('studio')){
         var studioId = msg.data.split(':')[1];
-        var studioName = dataObj[studioId].studioName;
-        var ppl = dataObj[studioId].people;
         var chatId = ""+msg.from.id;
-        var index = _.findIndex( ppl, function(p){
-          return p.chatId === chatId;
-        });
-
-        if( index > -1 ) {
-          //ppl.slice(index, index+1);
-          _.remove(ppl, function(p){ return p.chatId === chatId });
-          bot.answerCallbackQuery(msg.id, 'You are removed from '+ studioName, false);
-          updateFile();
-        } else {
-          ppl.push({
-            name: msg.from.first_name,
-            chatId: chatId
-          });
-          bot.answerCallbackQuery(msg.id, 'You are added to '+studioName, false);
-          updateFile();
-        } 
+        var firstName = msg.from.first_name;
+        
+        var resultMessage = data.toggleMembership(chatId, firstName, studioId);
+        if(resultMessage.length) {
+          bot.answerCallbackQuery(msg.id, resultMessage, false);
+        }
+      
       }else if( msg.data.startsWith('door')){
-        //TODO: respond to door UI
-        console.log('messageCallback', messageCallback);
         if(messageCallback){
           messageCallback(msg);
         }
       }
     });
-    var updateFile = function(){
-      fs.writeFile(file, JSON.stringify(dataObj, null, 2),function(err){
-        if(err){
-          console.log("write file error", err);
-        }
-      });
-    }
   }
 
   // Pulls telegram chat ID from the data JSON file and sends it an alert message.
@@ -126,8 +104,9 @@ const fs = require('fs');
     });
   }
 
-
+  
   module.exports.dingDong = dingDong;
+  
   module.exports.setup = setup;
 
 }());

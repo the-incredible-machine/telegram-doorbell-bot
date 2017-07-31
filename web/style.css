@@ -1,3 +1,5 @@
+
+
 body
 {
 	font-family: 'Arial', sans-serif;
@@ -69,3 +71,26 @@ a
 		color: red;
 		transition: .2s all;
 	}
+
+	div#popup {
+		  display: none;
+ 	 		position: fixed;
+  		top: 100px;
+  		margin: auto;
+			width: 350px;
+			background-color: #eee; 
+			border: 2px solid black;
+			padding: 15px;
+			box-shadow: -40px 10px black;
+}
+
+#close-button button {
+	  border: none;
+  	position: absolute;
+  	right: 5px;
+  	top: 5px;
+  	background: #eee;
+  	font-size: 30px;
+}
+
+    

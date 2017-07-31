@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"> </script>
+	<script src="index.js"></script>
+</head>
+<body>
+	<audio id="doorbell-sound" preload="auto">
+	   <source src="doorbell.mp3"></source>
+	</audio>
+	<audio id="error-sound" preload="auto">
+	   <source src="error.wav"></source>
+	</audio>
+	<audio id="success-sound" preload="auto">
+	   <source src="success.wav"></source>
+	</audio>
+	<div id="studios">
+	</div>
+	<div id="header">
+		<h1>Welcome to Voorhaven 57</h1>
+		<h2>Who are you here to see?</h2>
+		<div id="divider"></div>
+	</div>
+	<div id="popup">
+		<div id="close-button"><button>&#10060;</button></div>
+		<div id="ringing" class="messages">
+			<h2>Ringing the bell</h2>
+			<p><span class="studio">X</span> has been notified. Waiting for a response...</p>
+		</div>
+		<div id="coming" class="messages">
+			<h2>Someone's coming!</h2>
+			<p>Somebody from <span class="studio">X</span> is coming to the door!</p>
+		</div>
+		<div id="not-coming" class="messages">
+			<h2>Unable to come</h2>
+			<p>Nobbody from <span class="studio">X</span> can come to the door.</p>
+			<p>For deliveries use the doorbell to the left of the door.</p>
+		</div>
+		<div id="no-response" class="messages">
+			<h2>No response</h2>
+			<p>No response from <span class="studio">X</span>.</p>
+			<p>For deliveries use the doorbell to the left of the door.</p>
+		</div>
+		
+	</div>
+
+</body>
+</html>
