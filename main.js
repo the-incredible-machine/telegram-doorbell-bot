@@ -1,89 +1,67 @@
-// Include npm modules
+const electron = require('electron')
+// Module to control application life.
+const app = electron.app
+// Module to create native browser window.
+const BrowserWindow = electron.BrowserWindow
 
-const http = require('http');
-const _ = require('lodash');
-const static = require('node-static');
-const bot = require('./bot.js');
-const util = require('util');
-const data = require('./data.js');
+const path = require('path')
+const url = require('url')
 
-const port = 8888;
-const telegramToken = '425604028:AAH0poVhUMMNPq5_lIcLo0P1it3S2eHf8tM'
-const webroot = './web';
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
+let mainWindow
 
+function createWindow () {
+  // Create the browser window.
+  mainWindow = new BrowserWindow({
+    width: 800, 
+    height: 600,
+    autoHideMenuBar:true
+  })
 
+  mainWindow.setFullScreen(true);
 
+  // and load the index.html of the app.
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+  
 
-// Set up static server
-var file = new(static.Server)(webroot, {
-	cache: 0
-});
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools()
 
-var messagesResponse;
-var naysayers;
-var currentStudioId;
-
-var messageCallback = function (msg) {
-
-	if ( msg.data === "door:yes" ) {
-
-		if (messagesResponse) {
-			messagesResponse.writeHead(200, {
-				'Content-Type': 'text/html'
-			});
-			//messagesResponse.write(msg.message.chat.username);
-			messagesResponse.write("coming");
-			messagesResponse.end();
-		}
-	} else if ( msg.data === "door:no") {
-		naysayers.push(msg.message.chat.id);
-		if( naysayers.length >= data.getMemberCount(currentStudioId)){
-				messagesResponse.writeHead(200, {
-				'Content-Type': 'text/html'
-			});
-			//messagesResponse.write(msg.message.chat.username);
-			messagesResponse.write("not-coming");
-			messagesResponse.end();
-		}
-	}
-	//TODO : let ppl in studio know aobut response
-
+  // Emitted when the window is closed.
+  mainWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  })
 }
 
-// Bot setup
-bot.setup(telegramToken, messageCallback);
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createWindow)
 
-var server = http.createServer(function (req, res) {
-	req.addListener('end', function () {
-		//if (req.url.startsWith('/messages')) {
-			//console.log("messages");
-			//messagesResponse = res;
-		//} else 
-		if (req.url.startsWith('/dingdong?')) {
-			messagesResponse = res;
-			// res.writeHead(200, {
-			// 	"Content-Type": "text/html"
-			// });
-			var clickID = req.url.split("?")[1].split("&")[0].split("=")[1];
-			bot.dingDong(clickID);
-			currentStudioId = clickID;
-			naysayers = [];
-		} else {
+// Quit when all windows are closed.
+app.on('window-all-closed', function () {
+  // On OS X it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
 
+app.on('activate', function () {
+  // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
+  }
+})
 
-			file.serve(req, res, function (err, result) {
-				if (err) {
-					console.error('Error serving %s - %s', req.url, err.message);
-					res.writeHead(err.status, err.headers);
-					res.write("" + err.status);
-					res.end();
-				} else {
-					console.log('%s - %s', req.url, res.message);
-				}
-			});
-		}
-	}).resume();
-
-}).listen(port, function () {
-	console.log("Now online on " + port)
-});
+// In this file you can include the rest of your app's specific main process
+// code. You can also put them in separate files and require them here.
