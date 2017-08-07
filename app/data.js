@@ -5,7 +5,7 @@ const _ = require('lodash');
 const fs = require('fs');
 
 (function () {
-  const file = 'web/data.json';
+  const file = 'app/data.json';
   var dataObj = JSON.parse(fs.readFileSync(file));
 
   var toggleMembership = function(chatId, firstName, studioId){
@@ -34,6 +34,10 @@ const fs = require('fs');
     return(dataObj[studioId].people.length);
   }
 
+  var getData = function() {
+    return dataObj;
+  }
+  
   var updateFile = function(){
       fs.writeFile(file, JSON.stringify(dataObj, null, 2),function(err){
         if(err){
@@ -44,4 +48,5 @@ const fs = require('fs');
   
   module.exports.toggleMembership = toggleMembership;
   module.exports.getMemberCount = getMemberCount;
+  module.exports.getData = getData;
 }());

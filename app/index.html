@@ -3,7 +3,8 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" type="text/css" href="style.css" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"> </script>
+	<script>window.$ = window.jQuery = require('jquery');</script>
+	
 	<script src="index.js"></script>
 </head>
 <body>
@@ -41,6 +42,11 @@
 		<div id="no-response" class="messages">
 			<h2>No response</h2>
 			<p>No response from <span class="studio">X</span>.</p>
+			<p>For deliveries use the doorbell to the left of the door.</p>
+		</div>
+		<div id="out-of-office" class="messages">
+			<h2>Out of office</h2>
+			<p>No one from <span class="studio">X</span> is present at the moment.</p>
 			<p>For deliveries use the doorbell to the left of the door.</p>
 		</div>
 		

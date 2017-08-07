@@ -1,39 +1,32 @@
-
-
-body
-{
+body {
 	font-family: 'Arial', sans-serif;
 	background-color: #EEE;
 	color: #010;
 	letter-spacing: 1px;
 	margin: 0;
-	padding:20px;
+	padding: 20px;
 }
 
-div#header
-{
+div#header {
 	position: fixed;
 	top: 0px;
 	padding-top: 20px;
 	background-color: #EEE;
 }
 
-h1
-{
+h1 {
 	font-weight: normal;
 	height: 40px;
 	margin: 0;
 }
 
-h2
-{
+h2 {
 	font-weight: normal;
 	height: 40px;
 	margin: 20px 0;
 }
 
-div#divider
-{
+div#divider {
 	content: " ";
 	display: block;
 	width: 40px;
@@ -41,56 +34,56 @@ div#divider
 	border-top: 2px solid;
 }
 
-div#studios
-{
-	margin-top:160px;
+div#studios {
+	margin-top: 160px;
 }
 
-ul
-{
+ul {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	font-size:28px;
+	font-size: 28px;
 }
 
-li
-{
+li {
 	margin: 5px 0;
 }
 
-a
-{
+a {
 	text-decoration: none;
 	color: #010;
 	transition: .2s all;
 }
+a:hover {
+	color: red;
+	transition: .2s all;
+}
 
-	a:hover
-	{
-		color: red;
-		transition: .2s all;
-	}
+a.no-one {
+	color: #999;
+}
+a.no-one:hover {
+	color: #555;
+}
 
-	div#popup {
-		  display: none;
- 	 		position: fixed;
-  		top: 100px;
-  		margin: auto;
-			width: 350px;
-			background-color: #eee; 
-			border: 2px solid black;
-			padding: 15px;
-			box-shadow: -40px 10px black;
+
+div#popup {
+	display: none;
+	position: fixed;
+	top: 100px;
+	margin: auto;
+	width: 350px;
+	background-color: #eee;
+	border: 2px solid black;
+	padding: 15px;
+	box-shadow: -40px 10px black;
 }
 
 #close-button button {
-	  border: none;
-  	position: absolute;
-  	right: 5px;
-  	top: 5px;
-  	background: #eee;
-  	font-size: 30px;
+	border: none;
+	position: absolute;
+	right: 5px;
+	top: 5px;
+	background: #eee;
+	font-size: 30px;
 }
-
-    

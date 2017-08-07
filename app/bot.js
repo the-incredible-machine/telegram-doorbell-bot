@@ -10,8 +10,7 @@ const data = require('./data.js');
   var bot;
   var dingDong;
   var setup;
-  const file = 'web/data.json';
-  var dataObj = JSON.parse(fs.readFileSync(file));
+  var dataObj = data.getData();
   var messageCallback;
 
   //TODO: update default keyboard, or remove..
@@ -36,7 +35,7 @@ const data = require('./data.js');
     bot = new TelegramBot(token, {
       polling: true
     });
-    
+    console.log('bot:',bot);
     // Console.log each message that is received for debugging purposes
     bot.on('message', (msg) => {
       const chatId = msg.chat.id;
@@ -103,10 +102,19 @@ const data = require('./data.js');
       )
     });
   }
+  var notifyStudio = function( studioId, message, excludeId ) {
+    if( !dataObj[studioId].people.length ) return;
 
+    _.each(dataObj[studioId].people, function(p){
+      //if( p.chatId == excludeId ) return;
+
+      bot.sendMessage( p.chatId, message );
+    });
+  }
   
   module.exports.dingDong = dingDong;
-  
   module.exports.setup = setup;
+  module.exports.notifyStudio = notifyStudio;
+  
 
 }());
