@@ -1,5 +1,3 @@
-
-//TODO: move data stuff out of bot into data.js
 const jsonfile = require('jsonfile')
 const _ = require('lodash');
 const fs = require('fs');
