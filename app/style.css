@@ -83,6 +83,7 @@ div.overlay {
 }
 
 div#popup {
+	display:none;
 	position: fixed;
 	top: 0;
 	left:0;
@@ -94,7 +95,7 @@ div#popup {
 	background-color: #eee;
 	border: 2px solid black;
 	padding: 15px;
-	box-shadow: -40px 10px black;
+	box-shadow: -50px 20px black;
 }
 
 #close-button button {
