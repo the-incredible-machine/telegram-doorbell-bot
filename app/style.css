@@ -5,7 +5,9 @@ body {
 	letter-spacing: 1px;
 	margin: 0;
 	padding: 20px;
-	overflow:hidden;
+}
+::-webkit-scrollbar { 
+    display: none; 
 }
 
 div#header {
