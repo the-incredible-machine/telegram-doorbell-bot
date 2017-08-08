@@ -12,6 +12,7 @@ const data = require('./data.js');
   var setup;
   var dataObj = data.getData();
   var messageCallback;
+  var updateCallback;
 
   //TODO: update default keyboard, or remove..
   const defaultKeyboard = {
@@ -29,9 +30,10 @@ const data = require('./data.js');
   }
 
 
-  setup = function (token, _messageCallback) {
+  setup = function (token, _messageCallback, _updateCallback) {
 
     messageCallback = _messageCallback;
+    updateCallback = _updateCallback;
     bot = new TelegramBot(token, {
       polling: true
     });
@@ -42,7 +44,7 @@ const data = require('./data.js');
       console.log(msg)
     });
     
-    // First command that is sent whena a Bot is added is "/Start/. Could be usefull for first time set up.
+    // First command that is sent when a Bot is added is "/Start/. Could be usefull for first time set up.
     bot.onText(/\/start/, (msg) => {
 
       var buttons = _.map(dataObj, function(s, i){
@@ -72,9 +74,10 @@ const data = require('./data.js');
         var firstName = msg.from.first_name;
         
         var resultMessage = data.toggleMembership(chatId, firstName, studioId);
-        if(resultMessage.length) {
-          bot.answerCallbackQuery(msg.id, resultMessage, false);
-        }
+        bot.answerCallbackQuery(msg.id, resultMessage, false);
+        
+        // Notify for updating the UI
+        if(updateCallback) updateCallback();
       
       }else if( msg.data.startsWith('door')){
         if(messageCallback){

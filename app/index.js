@@ -47,54 +47,60 @@ $(document).ready(function () {
 			bot.notifyStudio(currentStudioId, msg.message.chat.first_name + message );
 		}
 
-	});
+	}, updateUI);
 	
 
+	// Function to load and reload UI when changes happen
+	function updateUI() {
+		$('#studios').empty();
+		// Display studios
+		$('<ul/>', {
+			html: _.map(data.getData(), (value, index) => {
+				return '<li><a id="' + index + '" ' +
+					( data.getMemberCount(index) == 0 ? 'class="no-one"':'' ) +
+					'" href="#" onclick="return false;">' +
+					value.studioName +
+					"</a></li>";
+			}).join("")
+		}).appendTo('#studios');
 
 
-	// Display studios
-	$('<ul/>', {
-		html: _.map(data.getData(), (value, index) => {
-			return '<li><a id="' + index + '" ' +
-				( data.getMemberCount(index) == 0 ? 'class="no-one"':'' ) +
-				'" href="#" onclick="return false;">' +
-				value.studioName +
-				"</a></li>";
-		}).join("")
-	}).appendTo('#studios');
+		// Click handler for studios
+		$('a').click(function (event) {
+			currentStudioId = event.target.id;
+			$('#popup .studio').html(event.target.innerText);
+			naysayers = [];
+			
+			//When there are people listening for this studio notify them
+			if ( data.getMemberCount(currentStudioId ) > 0 ) {
+				doorbellSnd.play();
+				showPopup('ringing');
+				bot.dingDong(currentStudioId);
 
+				botTimeoutId && clearTimeout(botTimeoutId);
+				botTimeoutId = setTimeout(() => {
+					console.log("time out");
+					showPopup('no-response');
+					errorSnd.play();
+				}, 40000);
 
-	// Click handler for studios
-	$('a').click(function (event) {
-		currentStudioId = event.target.id;
-		$('#popup .studio').html(event.target.innerText);
-		naysayers = [];
-		
-		//When there are people listening for this studio notify them
-		if ( data.getMemberCount(currentStudioId ) > 0 ) {
-			doorbellSnd.play();
-			showPopup('ringing');
-			bot.dingDong(currentStudioId);
-
-			botTimeoutId && clearTimeout(botTimeoutId);
-			botTimeoutId = setTimeout(() => {
-				console.log("time out");
-				showPopup('no-response');
+			// When nobody is in the office immediately show popup
+			} else {
+				showPopup('out-of-office');
 				errorSnd.play();
-			}, 40000);
+			}
+		});
+	}
 
-		// When nobody is in the office immediately show popup
-		} else {
-			showPopup('out-of-office');
-			errorSnd.play();
-		}
-	});
-
+	// Run updateUI for first time
+	updateUI();
 
 	// Popup setup
-	$('#popup #close-button button').click(e => {
-		$(e.target.parentNode.parentNode).hide();
+	$('#popup #close-button button, .overlay').click(e => {
+		$('#popup').hide();
+		$('.overlay').hide();
 	});
+
 	
 	function showPopup(popupType) {
 		//clear existing timeouts which might hide the dialog
@@ -106,11 +112,15 @@ $(document).ready(function () {
 		//set the message
 		$('#popup .messages').hide();
 		$('#popup #' + popupType).show();
+		$('.overlay').show();
 		$('#popup').show();
 
 		//set new time out
 		popupTimeoutId = setTimeout(
-			() => $('#popup').hide(),
+			() => {
+				$('#popup').hide();
+				$('.overlay').hide();
+			},
 			40000
 		);
 	}
