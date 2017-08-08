@@ -5,6 +5,7 @@ body {
 	letter-spacing: 1px;
 	margin: 0;
 	padding: 20px;
+	cursor:none;
 }
 ::-webkit-scrollbar { 
     display: none; 
@@ -53,11 +54,13 @@ li {
 }
 
 a {
+	cursor:none;
 	text-decoration: none;
 	color: #010;
 	transition: .2s all;
 }
 a:hover {
+	cursor:none;
 	color: red;
 	transition: .2s all;
 }
