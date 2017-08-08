@@ -83,11 +83,14 @@ div.overlay {
 }
 
 div#popup {
-	display: none;
 	position: fixed;
-	top: 100px;
+	top: 0;
+	left:0;
+	right:0;
+	bottom:0;
 	margin: auto;
 	width: 350px;
+	height:170px;
 	background-color: #eee;
 	border: 2px solid black;
 	padding: 15px;
